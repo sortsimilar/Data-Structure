@@ -1,1 +1,1 @@
-# example of data structure, including linklist, trees.
+example of data structure, including linklist, trees.

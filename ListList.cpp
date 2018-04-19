@@ -1,3 +1,5 @@
+// Reference: https://www.codementor.io/codementorteam/a-comprehensive-guide-to-implementation-of-singly-linked-list-using-c_plus_plus-ondlm5azr
+
 #include<iostream>
 using namespace std;
 
@@ -11,15 +13,27 @@ class List
 {
 	
 public:
-	Node * head, *tail;
+	Node * head, *tail; //tail help us add element at last;
 	List()
 	{
 		head = NULL;
 		tail = NULL;
 	}
 
-	// add a new node to list;
-	void add_node(int value)
+	// print all node in list;
+	void print_list()
+	{
+		Node *temp;
+		temp = head;
+		while (temp != NULL)
+		{
+			cout << temp->data << " " << temp << endl;
+			temp = temp->next;
+		}
+	}
+
+	// insert a new node at last;
+	void insert_last(int value)
 	{
 		Node *temp = new Node;
 		temp->data = value;
@@ -35,18 +49,6 @@ public:
 		{
 			tail->next = temp;
 			tail = temp;
-		}
-	}
-
-	// print all node in list;
-	void print_list()
-	{
-		Node *temp;
-		temp = head;
-		while (temp != NULL)
-		{
-			cout << temp->data << " " << temp << endl;
-			temp = temp->next;
 		}
 	}
 
@@ -100,6 +102,22 @@ public:
 		}
 		delete temp->next;
 		temp->next = NULL;
+		tail = temp->next;
+	}
+
+	// delete at certain position;
+	void delete_position(int position)
+	{
+		Node *temp = new Node;
+		Node *node_deleted = new Node;
+		temp = head;
+		for (int i = 1;i < position;i++)
+		{
+			temp = temp->next;
+		}
+		node_deleted = temp->next;
+		temp->next = temp->next->next;
+		delete node_deleted;
 	}
 };
 
@@ -108,13 +126,14 @@ public:
 int main()
 {
 	List test;
-	test.add_node(20);
-	test.add_node(30);
-	test.add_node(40);
+	test.insert_last(20);
+	test.insert_last(30);
+	test.insert_last(40);
 //	test.insert_start(10); // test insert at start;
 //	test.insert_position(1, 35); // insert at certain position;
 //	test.delete_first(); // delete first element; 
-	test.delete_last(); // delete last element;
+//	test.delete_last(); // delete last element;
+	test.delete_position(1);
 
 	test.print_list();
 

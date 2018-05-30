@@ -43,6 +43,13 @@ void DFS(int i)
 // DFS all map;
 void DFSTraverse()
 {
+	// initialize visited matrix;
+	for(int i=1;i<=N;i++)
+	{
+		visited[i-1] = false;
+	}
+
+
 	for(int i=1;i<=N;i++)
 	{
 		if(visited[i-1]==false)
@@ -51,6 +58,26 @@ void DFSTraverse()
 		}
 	}
 }
+
+// test connected graph;
+bool test_connect()
+{
+	bool flag = true;
+
+	DFS(1);
+
+	for(int i=0;i<N;i++)
+	{
+		if(visited[i]==false)
+		{
+			flag = false;
+			break;
+		}
+	}
+
+	return flag;
+}
+
 
 
 int main()
@@ -69,7 +96,7 @@ int main()
 	}
 
 	// create adjacency matrix;
-	for(int i=0;i<(N-1)*(N-1);i++)
+	for(int i=0;i<N*N;i++)
 	{
 		adjacency_matrix.push_back(false);
 	}
@@ -94,11 +121,14 @@ int main()
 	}
 
 
-// test DFS one range;
-//	DFS(5);
-	
 
-	DFSTraverse();
+//	DFS(5); // test DFS one range;
+//	DFSTraverse();
+
+	bool result = test_connect();
+	cout<<result<<endl;
+
+
 
 	return 0;
 }

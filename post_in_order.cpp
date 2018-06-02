@@ -34,12 +34,14 @@ int build_tree(int inStart, int inEnd, int postStart, int postEnd)
 		}
 	}
 
+
+	pre_order.push_back(root+1);
+
 	binary[root].left = build_tree(inStart, k - 1, postStart, postStart + k - (inStart + 1));
 	// Becuase k is not the length, it it need to -(inStart+1) to get the length
 	binary[root].right = build_tree(k + 1, inEnd, postStart + k- inStart, postEnd - 1);
 	// postStart+k-inStart = postStart+k-(inStart+1) +1
-
-	pre_order.push_back(root+1);
+	
 
 	return root;
 }

@@ -12,6 +12,7 @@ struct Node
 
 vector<int> post_order;
 vector<int> in_order;
+vector<int> pre_order;
 vector<Node> binary;
 
 int build_tree(int inStart, int inEnd, int postStart, int postEnd)
@@ -38,6 +39,7 @@ int build_tree(int inStart, int inEnd, int postStart, int postEnd)
 	binary[root].right = build_tree(k + 1, inEnd, postStart + k- inStart, postEnd - 1);
 	// postStart+k-inStart = postStart+k-(inStart+1) +1
 
+	pre_order.push_back(root+1);
 
 	return root;
 }
@@ -83,12 +85,17 @@ int main()
 
 	build_tree(0, N-1, 0, N-1);
 
-
+/*
 	for(int i=0;i<N;i++)
 	{
 		cout<<binary[i].name<<" "<<binary[i].left<<" "<<binary[i].right<<endl;
 	}
+*/
 
+	for(int i=0;i<N;i++)
+	{
+		cout<<pre_order[i]<<" ";
+	}
 
 
 	return 0;

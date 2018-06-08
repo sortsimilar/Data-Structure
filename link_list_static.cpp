@@ -15,7 +15,7 @@ struct Node
 };
 
 vector<Node> linklist(100001);
-
+vector<Node> linklist_origin;
 
 // convert int to string;
 string int_to_string(int addr)
@@ -34,14 +34,17 @@ string int_to_string(int addr)
 	return result;
 }
 
-// print link list;
-void print_list(int head)
+// create link list;
+void create_list(int head)
 {
 	int	current = head;
 	while(current != -1)
 	{	
-		cout<<int_to_string(linklist[current].addr)<<" "<<linklist[current].key<<" "<<int_to_string(linklist[current].next);
-		if(linklist[current].next != -1)    cout<<endl;
+		Node temp;
+		temp.addr = linklist[current].addr;
+		temp.key = linklist[current].key;
+		temp.next = linklist[current].next;
+		linklist_origin.push_back(temp);
 
 		current = linklist[current].next;
 	}
@@ -83,9 +86,12 @@ int main()
 		linklist[temp].next = save[i].next;
 	}
 
-	print_list(head);
-
-
+//	print link list;
+	create_list(head);
+	for(int i=0;i<linklist_origin.size();i++)
+	{
+		cout<<linklist_origin[i].addr<<" "<<linklist_origin[i].key<<" "<<linklist_origin[i].next<<endl;
+	}
 
 
 	return 0;

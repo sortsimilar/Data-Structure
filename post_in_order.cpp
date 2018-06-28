@@ -1,111 +1,108 @@
-#include<iostream>
-#include<vector>
-using namespace std;
-
-
+#include<iostream>  
+#include<vector>  
+using namespace std;  
+      
 struct Node
-{
-	int left;
-	int right;
-	int name;
-};
+{  
+    int key;  
+    Node* left;  
+    Node* right;  
+};  
 
 vector<int> post_order;
 vector<int> in_order;
-vector<int> pre_order;
-vector<Node> binary;
 
-int build_tree(int inStart, int inEnd, int postStart, int postEnd)
-{
-	if (inStart > inEnd || postStart > postEnd)
+vector<int> result;  
+    
+Node* build_tree(int postStart, int postEnd, int midStart, int midEnd)
+{  
+    if (postStart > postEnd)
+	{  
+        return NULL;  
+    }  
+  
+    Node * root = new Node;  
+    //查找后序队列中，最后一个数据在中序队列中的位置  
+    int i;  
+    for (i = midStart; i <= midEnd; i++)
+	{  
+        if (in_order[i] == post_order[postEnd])
+		{  
+            //找到了，中序队列中第i个位置就是的  
+            break;  
+        }  
+      
+    }  
+    //中序队列中距离的起始位置的个数，即第i个位置为根结点，左边num个是它的左子树的个数  
+    int numStart = i - midStart;  
+    root->key = post_order[postEnd];  
+    root->left = build_tree(postStart, postStart + numStart - 1, midStart , i - 1);   
+    root->right = build_tree(postStart + numStart, postEnd - 1, i + 1, midEnd);  
+    return root;  
+}  
+      
+      
+      
+//层次遍历二叉树  
+void level_order(Node * root,int totalNode)
+{  
+    if (root == NULL)
+	{  
+        return;  
+    }  
+
+	vector<Node*> q;  
+    q.push_back(root);  
+
+
+    while (!q.empty())
 	{
-		return -1;
-	}
+		Node* current = q[0];
+		q.erase(q.begin());
+		
+		result.push_back(current->key); 
+  
+        if (current->left != NULL)    q.push_back(current->left);//左子树入队    
+        if (current->right != NULL)   q.push_back(current->right);//右子树入队  
 
-	int root = post_order[postEnd];
-
-	int k = 0;
-	for (int i = 0; i < in_order.size(); i++) 
-	{
-		if (in_order[i] == root) 
-		{
-			k = i;
-			break;
-		}
-	}
-
-
-	pre_order.push_back(root+1);
-
-	binary[root].left = build_tree(inStart, k - 1, postStart, postStart + k - (inStart + 1));
-	// Becuase k is not the length, it it need to -(inStart+1) to get the length
-	binary[root].right = build_tree(k + 1, inEnd, postStart + k- inStart, postEnd - 1);
-	// postStart+k-inStart = postStart+k-(inStart+1) +1
-	
-
-	return root;
-}
-
-
-
+    }
+	  
+    return ;  
+}  
+      
 int main()
-{
-// input process ////////////////////////////////////////
+{  
 	int N;
-	cin>>N;
+	cin>>N;  
 
-
-	for(int i=0;i<N;i++)
-	{
+    //后序序列  
+    for (int i = 0; i<N; i++)
+	{  
 		int temp;
 		cin>>temp;
-		post_order.push_back(temp-1);
-	}
-
-	for(int i=0;i<N;i++)
-	{
+		post_order.push_back(temp);
+    }  
+    //中序序列  
+    for (int i = 0; i<N; i++)
+	{  
 		int temp;
 		cin>>temp;
-		in_order.push_back(temp-1);
-	}
-
-// initialize binary tree;
-	for(int i=0;i<N;i++)
-	{
-		Node temp;
-		temp.name = i;
-		binary.push_back(temp);
-	}
-
-/*
-	for(int i=0;i<N;i++)    cout<<post_order[i]<<" ";
-	cout<<endl;
-	for(int i=0;i<N;i++)    cout<<in_order[i]<<" ";
-	cout<<endl;
-*/
-
-
-	build_tree(0, N-1, 0, N-1);
-
-/*
-	for(int i=0;i<N;i++)
-	{
-		cout<<binary[i].name<<" "<<binary[i].left<<" "<<binary[i].right<<endl;
-	}
-*/
+		in_order.push_back(temp);
+    }  
+    //根据后序和中序序列建二叉树  
+    Node* root = build_tree(0, N-1, 0, N-1);  
+    //层次遍历二叉树  
+    level_order(root, N);  
 
 	for(int i=0;i<N;i++)
 	{
-		cout<<pre_order[i]<<" ";
+		cout<<result[i];
+		if(i!=N-1)    cout<<" ";
 	}
+  
+    return 0;  
+}  
 
 
-	return 0;
-}
 
-/*
-7
-2 3 1 5 7 6 4
-1 2 3 4 5 6 7
-*/
 

@@ -87,13 +87,13 @@ int main()
 	cin>>N;	
 	cin>>M;
 
+	store_edge.resize(M);
 	for(int i=0;i<M;i++)
 	{
-		Edge temp;
-		cin>>temp.start;
-		cin>>temp.end;
-		store_edge.push_back(temp);
+		cin>>store_edge[i].start;
+		cin>>store_edge[i].end;
 	}
+
 
 	// create adjacency matrix;
 	for(int i=0;i<N*N;i++)

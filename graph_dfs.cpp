@@ -115,9 +115,10 @@ int main()
 //	cout<<test_edge(2, 4)<<endl;
 
 	// generate visited point;
+	visited.resize(N);
 	for(int i=0;i<N;i++)
 	{
-		visited.push_back(false);
+		visited[i] = false;
 	}
 
 

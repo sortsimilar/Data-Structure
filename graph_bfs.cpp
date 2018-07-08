@@ -36,24 +36,36 @@ bool test_edge(int start, int end)
 // BFS one range;
 void BFS(int i)
 {
-	visited[i-1] = true;
-	cout<<i<<" ";
+	visited[i-1] = true;	
 
-	vector<int> q;
-	q.push_back(i);
+	vector<Node> q;
+	Node temp;
+	temp.key = i;
+	temp.level = 0;
+
+	cout<<temp.key<<" "<<temp.level<<endl;
+	
+	q.push_back(temp);
 
 	while(q.size()!=0)
 	{
-		int first = q.front();
+		Node first = q.front();
 		q.erase(q.begin());
 
 		for(int j=0;j<N;j++)
 		{
-			if((test_edge(first, j+1) == true)&&(visited[j]==false))
+			if((test_edge(first.key, j+1) == true)&&(visited[j]==false))
 			{
 				visited[j] = true;
-				cout<<j+1<<" ";
-				q.push_back(j+1);
+
+				Node temp;
+				temp.key = j+1;
+				temp.level = first.level + 1;
+
+
+				cout<<temp.key<<" "<<temp.level<<endl;
+
+				q.push_back(temp);
 			}
 		}
 
@@ -63,9 +75,9 @@ void BFS(int i)
 }
 
 
-/*
-// DFS all map;
-void DFSTraverse()
+
+// BFS all map;
+void BFSTraverse()
 {
 	// initialize visited matrix;
 	for(int i=1;i<=N;i++)
@@ -78,11 +90,11 @@ void DFSTraverse()
 	{
 		if(visited[i-1]==false)
 		{
-			DFS(i);
+			BFS(i);
 		}
 	}
 }
-*/
+
 
 
 
@@ -130,16 +142,11 @@ int main()
 
 
 
-	BFS(1); // test BFS one range;
+//	BFS(1); // test BFS one range;
+
+	BFSTraverse();
 
 
-
-
-
-//	DFSTraverse();
-
-//	bool result = test_connect();
-//	cout<<result<<endl;
 
 
 

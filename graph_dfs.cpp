@@ -9,7 +9,7 @@ struct Edge
 };
 
 
-int N; // number of vertices
+int num_v; // number of vertices
 int M; //  number of edges
 vector<Edge> store_edge;
 vector<bool> adjacency_matrix;
@@ -19,8 +19,8 @@ bool test_edge(int start, int end)
 {
 	bool flag = false;
 
-	if(adjacency_matrix[(start-1)*N+(end-1)]==true)    flag = true;
-	if(adjacency_matrix[(start-1)+(end-1)*N]==true)    flag = true;
+	if(adjacency_matrix[(start-1)*num_v+(end-1)]==true)    flag = true;
+	if(adjacency_matrix[(start-1)+(end-1)*num_v]==true)    flag = true;
 
 	return flag;
 }
@@ -30,7 +30,7 @@ void DFS(int i)
 {
 	visited[i-1] = true;
 	cout<<i<<" ";
-	for(int j=1;j<=N;j++)
+	for(int j=1;j<=num_v;j++)
 	{
 		if((test_edge(i, j)==true)&&(visited[j-1]==false))
 		{
@@ -44,13 +44,13 @@ void DFS(int i)
 void DFSTraverse()
 {
 	// initialize visited matrix;
-	for(int i=1;i<=N;i++)
+	for(int i=1;i<=num_v;i++)
 	{
 		visited[i-1] = false;
 	}
 
 
-	for(int i=1;i<=N;i++)
+	for(int i=1;i<=num_v;i++)
 	{
 		if(visited[i-1]==false)
 		{
@@ -66,7 +66,7 @@ bool test_connect()
 
 	DFS(1);
 
-	for(int i=0;i<N;i++)
+	for(int i=0;i<num_v;i++)
 	{
 		if(visited[i]==false)
 		{
@@ -84,7 +84,9 @@ int main()
 {
 // store edge and vertices ////////////////////////////////
 	
-	cin>>N;	
+	int N;
+	cin>>N;
+	num_v = N;	
 	cin>>M;
 
 	store_edge.resize(M);

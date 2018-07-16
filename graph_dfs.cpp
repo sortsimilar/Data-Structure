@@ -10,7 +10,6 @@ struct Edge
 
 
 int num_v; // number of vertices
-int M; //  number of edges
 vector<Edge> store_edge;
 vector<bool> adjacency_matrix;
 vector<bool> visited;
@@ -87,6 +86,7 @@ int main()
 	int N;
 	cin>>N;
 	num_v = N;	
+	int M; //  number of edges
 	cin>>M;
 
 	store_edge.resize(M);
@@ -98,9 +98,10 @@ int main()
 
 
 	// create adjacency matrix;
+	adjacency_matrix.resize(N*N);
 	for(int i=0;i<N*N;i++)
 	{
-		adjacency_matrix.push_back(false);
+		adjacency_matrix[i] = false;
 	}
 
 	// save current amp in adjacency matrix;
@@ -109,8 +110,8 @@ int main()
 		int start = store_edge[i].start - 1;
 		int end = store_edge[i].end - 1;
 
-		adjacency_matrix[start*N + end] = true;
-		adjacency_matrix[start + end*N] = true;
+		adjacency_matrix[start*num_v + end] = true;
+		adjacency_matrix[start + end*num_v] = true;
 	}
 
 //	cout<<test_edge(2, 1)<<endl;

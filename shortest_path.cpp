@@ -2,23 +2,45 @@
 // The program is for adjacency matrix representation of the graph
 #include<iostream>  
 #include<climits>
+#include<vector>
 using namespace std;
 // Number of vertices in the graph
 #define num_v 9
   
-int dist[num_v];     // The output array.  dist[i] will hold the shortest
+
+struct Edge
+{
+	int start;
+	int end;
+	int weight;
+};
+
+vector<Edge> store_edge;
+
+vector<int> dist;     // The output array.  dist[i] will hold the shortest
                       // distance from src to i
 
-bool sptSet[num_v]; // sptSet[i] will true if vertex i is included in shortest
+vector<bool> sptSet; // sptSet[i] will true if vertex i is included in shortest
                      // path tree or shortest distance from src to i is finalized
 
+vector<bool> adjacency_matrix;
 
+int graph[num_v][num_v]= {{0, 4, 0, 0, 0, 0, 0, 8, 0},
+                      {4, 0, 8, 0, 0, 0, 0, 11, 0},
+                      {0, 8, 0, 7, 0, 4, 0, 0, 2},
+                      {0, 0, 7, 0, 9, 14, 0, 0, 0},
+                      {0, 0, 0, 9, 0, 10, 0, 0, 0},
+                      {0, 0, 4, 14, 10, 0, 2, 0, 0},
+                      {0, 0, 0, 0, 0, 2, 0, 1, 6},
+                      {8, 11, 0, 0, 0, 0, 1, 0, 7},
+                      {0, 0, 2, 0, 0, 0, 6, 7, 0}
+                     };
 
 // A utility function to find the vertex with minimum distance value, from
 // the set of vertices not yet included in shortest path tree
 int minDistance()
 {
-   // Initialize min value
+	// Initialize min value
 	int min = INT_MAX;
 	int min_index;
   
@@ -46,7 +68,7 @@ int printSolution()
   
 // Function that implements Dijkstra's single source shortest path algorithm
 // for a graph represented using adjacency matrix representation
-void dijkstra(int graph[num_v][num_v], int src)
+void dijkstra(int src)
 {          
   
 	// Initialize all distances as INFINITE and stpSet[] as false
@@ -87,22 +109,46 @@ void dijkstra(int graph[num_v][num_v], int src)
 // driver program to test above function
 int main()
 {
-   /* Let us create the example graph discussed above */
-   int graph[num_v][num_v] = {{0, 4, 0, 0, 0, 0, 0, 8, 0},
-                      {4, 0, 8, 0, 0, 0, 0, 11, 0},
-                      {0, 8, 0, 7, 0, 4, 0, 0, 2},
-                      {0, 0, 7, 0, 9, 14, 0, 0, 0},
-                      {0, 0, 0, 9, 0, 10, 0, 0, 0},
-                      {0, 0, 4, 14, 10, 0, 2, 0, 0},
-                      {0, 0, 0, 0, 0, 2, 0, 1, 6},
-                      {8, 11, 0, 0, 0, 0, 1, 0, 7},
-                      {0, 0, 2, 0, 0, 0, 6, 7, 0}
-                     };
+	dist.resize(num_v);
+	sptSet.resize(num_v);
+
+	// create adjacency matrix;
+	adjacency_matrix.resize(num_v*num_v);
+	for(int i=0;i<num_v*num_v;i++)
+	{
+		adjacency_matrix[i] = 0;
+	}
+
+	int num_e = 14;
+	store_edge.resize(num_e);
+	for(int i=0;i<num_e;i++)
+	{
+		cin>>store_edge[i].start;
+		cin>>store_edge[i].end;
+		cin>>store_edge[i].weight;
+	}
+
   
-    dijkstra(graph, 0);
+    dijkstra(0);
   
     return 0;
 }
 
+/*
 
+0 1 4
+1 2 8
+2 3 7
+3 4 9
+4 5 10
+5 6 2
+6 7 1
+7 0 8
+1 7 11
+3 5 14
+2 8 2
+8 6 6
+7 8 7
+2 5 4
 
+*/

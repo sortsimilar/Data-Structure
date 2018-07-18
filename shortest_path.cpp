@@ -44,12 +44,12 @@ int minDistance()
 }
   
 // A utility function to print the constructed distance array
-int printSolution()
+int printSolution(int src)
 {
-	cout<<"Vertex   Distance from Source"<<endl;
 	for (int i=0;i<num_v;i++)
 	{
-		cout<<i<<" tt "<<dist[i]<<": ";
+		cout<<src<<" distance to ";
+		cout<<i<<" is "<<dist[i]<<"; path is ";
 
 		int current = i;
 		while(current != -1)
@@ -139,10 +139,10 @@ int main()
 		adjacency_matrix[start + end*num_v] = store_edge[i].weight;
 	}
   
-    dijkstra(0);
+    dijkstra(1);
   
 	// print the constructed distance array
-	printSolution();
+	printSolution(1);
 
     return 0;
 }

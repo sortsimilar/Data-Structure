@@ -113,13 +113,6 @@ int main()
 	sptSet.resize(num_v);
 	previous.resize(num_v);
 
-	// create adjacency matrix;
-	adjacency_matrix.resize(num_v*num_v);
-	for(int i=0;i<num_v*num_v;i++)
-	{
-		adjacency_matrix[i] = 0;
-	}
-
 	int num_e = 14;
 	store_edge.resize(num_e);
 	for(int i=0;i<num_e;i++)

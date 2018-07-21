@@ -4,29 +4,14 @@
 using namespace std; 
 
 
-void merge(int arr[], int l, int m, int r);
+vector<int> arr;
+
+
+
 int min(int x, int y) { return (x<y)? x :y; }
  
- 
-/* Iterative mergesort function to sort arr[0...n-1] */
-void mergeSort(int arr[], int n)
-{ 
-   for (int curr_size=1; curr_size<=n-1; curr_size = 2*curr_size)
-   {
-       for (int left_start=0; left_start<n-1; left_start += 2*curr_size)
-       {
-           int mid = left_start + curr_size - 1;
- 
-           int right_end = min(left_start + 2*curr_size - 1, n-1);
- 
-           merge(arr, left_start, mid, right_end);
-       }
-   }
-}
 
- 
-/* Function to merge the two haves arr[l..m] and arr[m+1..r] of array arr[] */
-void merge(int arr[], int l, int m, int r)
+void merge(int l, int m, int r)
 {
     int i, j, k;
     int n1 = m - l + 1;
@@ -75,13 +60,32 @@ void merge(int arr[], int l, int m, int r)
     }
 }
  
+
+void merge_sort()
+{ 
+   for (int curr_size=1; curr_size<=arr.size()-1; curr_size = 2*curr_size)
+   {
+       for (int left_start=0; left_start<arr.size()-1; left_start += 2*curr_size)
+       {
+           int mid = left_start + curr_size - 1;
+ 
+           int right_end = min(left_start + 2*curr_size - 1, arr.size()-1);
+ 
+           merge(left_start, mid, right_end);
+       }
+   }
+}
+
+
+
+
 /* Function to print an array */
-void printArray(int A[], int size)
+void printArray()
 {
     int i;
-    for (i=0; i < size; i++)
+    for (i=0;i<arr.size();i++)
 	{
-        cout<<A[i]<<" ";
+        cout<<arr[i]<<" ";
 	}
     cout<<endl;
 }
@@ -89,17 +93,22 @@ void printArray(int A[], int size)
 
 
 int main()
-{
-    int arr[] = {12, 11, 13, 5, 6, 7};
-    int n = sizeof(arr)/sizeof(arr[0]);
- 
+{ 
+	arr.resize(6);
+	arr[0] = 12;
+	arr[1] = 11;
+	arr[2] = 13;
+	arr[3] = 5;
+	arr[4] = 6;
+	arr[5] = 7;
+
     cout<<"Given array is "<<endl;
-    printArray(arr, n);
+    printArray();
  
-    mergeSort(arr, n);
+    merge_sort();
  
     cout<<"Sorted array is "<<endl;
-    printArray(arr, n);
+    printArray();
 
     return 0;
 }

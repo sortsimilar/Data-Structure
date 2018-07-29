@@ -14,6 +14,7 @@ struct Node
 	int next;
 };
 
+vector<Node> save;
 vector<Node> linklist(100001);
 vector<Node> linklist_origin;
 
@@ -60,14 +61,12 @@ int main()
 	int K; // length of the sublist to be reversed;
 	cin>>K; 
 
-	vector<Node> save;
-	for(int i=0;i<N;i++)
+	save.resize(N);
+	for(int i=0;i<save.size();i++)
 	{
-		Node temp;
-		cin>>temp.addr;
-		cin>>temp.key;
-		cin>>temp.next;
-		save.push_back(temp);
+		cin>>save[i].addr;
+		cin>>save[i].key;
+		cin>>save[i].next;
 	}
 
 	// initialize link list;	

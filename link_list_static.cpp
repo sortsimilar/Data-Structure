@@ -8,7 +8,6 @@ using namespace std;
 struct Node
 {
 	int location;
-	int prev;
 	int addr;
 	int key;
 	int next;
@@ -41,12 +40,7 @@ void create_list(int head)
 	int	current = head;
 	while(current != -1)
 	{	
-		Node temp;
-		temp.addr = linklist[current].addr;
-		temp.key = linklist[current].key;
-		temp.next = linklist[current].next;
-		linklist_origin.push_back(temp);
-
+		linklist_origin.push_back(linklist[current]);
 		current = linklist[current].next;
 	}
 }
@@ -54,13 +48,11 @@ void create_list(int head)
 
 int main()
 {
-	int head; // address of the first node;
-	cin>>head;
 	int N; // total number of nodes;
 	cin>>N; 
-	int K; // length of the sublist to be reversed;
-	cin>>K; 
-
+	int head; // address of the first node;
+	cin>>head;
+	
 	save.resize(N);
 	for(int i=0;i<save.size();i++)
 	{
@@ -93,8 +85,21 @@ int main()
 	}
 
 
+
+
 	return 0;
 }
 
+
+/*
+
+5 00001
+11111 100 -1
+00001 0 22222
+33333 100000 11111
+12345 -1 33333
+22222 1000 12345
+
+*/
 
 

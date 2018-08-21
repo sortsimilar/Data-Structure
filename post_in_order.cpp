@@ -23,21 +23,22 @@ Node* build_tree(int postStart, int postEnd, int midStart, int midEnd)
   
     Node * root = new Node;  
     //查找后序队列中，最后一个数据在中序队列中的位置  
-    int i;  
-    for (i = midStart; i <= midEnd; i++)
+    int position;  
+    for (int i = midStart; i <= midEnd; i++)
 	{  
         if (in_order[i] == post_order[postEnd])
 		{  
             //找到了，中序队列中第i个位置就是的  
+			position = i;
             break;  
         }  
       
     }  
     //中序队列中距离的起始位置的个数，即第i个位置为根结点，左边num个是它的左子树的个数  
-    int numStart = i - midStart;  
+    int numStart = position - midStart;  
     root->key = post_order[postEnd];  
-    root->left = build_tree(postStart, postStart + numStart - 1, midStart , i - 1);   
-    root->right = build_tree(postStart + numStart, postEnd - 1, i + 1, midEnd);  
+    root->left = build_tree(postStart, postStart+numStart-1, midStart , position-1);   
+    root->right = build_tree(postStart+numStart, postEnd-1, position+1, midEnd);
     return root;  
 }  
       
@@ -103,6 +104,11 @@ int main()
     return 0;  
 }  
 
+/*
+
+6
+3 4 2 6 5 1
+3 2 4 1 6 5
 
 
-
+*/

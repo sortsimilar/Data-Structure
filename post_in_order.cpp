@@ -14,7 +14,7 @@ vector<int> in_order;
 
 vector<int> result;  
     
-Node* build_tree(int postStart, int postEnd, int midStart, int midEnd)
+Node* build_tree(int inStart, int inEnd, int postStart, int postEnd)
 {  
     if (postStart > postEnd)
 	{  
@@ -24,7 +24,7 @@ Node* build_tree(int postStart, int postEnd, int midStart, int midEnd)
     Node * root = new Node;  
     //查找后序队列中，最后一个数据在中序队列中的位置  
     int position;  
-    for (int i = midStart; i <= midEnd; i++)
+    for (int i = inStart; i <= inEnd; i++)
 	{  
         if (in_order[i] == post_order[postEnd])
 		{  
@@ -36,8 +36,9 @@ Node* build_tree(int postStart, int postEnd, int midStart, int midEnd)
     }  
     //中序队列中距离的起始位置的个数，即第i个位置为根结点，左边num个是它的左子树的个数  
     root->key = post_order[postEnd];  
-    root->left = build_tree(postStart, postStart-midStart+position-1, midStart , position-1);   
-    root->right = build_tree(postStart-midStart+position, postEnd-1, position+1, midEnd);
+    root->left = build_tree(inStart , position-1, postStart, postStart-inStart+position-1);   
+    root->right = build_tree(position+1, inEnd, postStart-inStart+position, postEnd-1);
+
     return root;  
 }  
       

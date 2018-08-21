@@ -25,19 +25,19 @@ Node* build_tree(int inStart, int inEnd, int preStart, int preEnd)
 
 	Node* root = new Node;  
 
-	int k = 0;
+	int position = 0;
 	for (int i = 0; i < in_order.size(); i++) 
 	{
 		if (in_order[i] == pre_order[preStart]) 
 		{
-			k = i;
+			position = i;
 			break;
 		}
 	}
 
 	root->key = pre_order[preStart];
-	root->left = build_tree(inStart, k-1, preStart+1, preStart+k-inStart);
-	root->right = build_tree(k+1, inEnd, preStart+(k-inStart)+1, preEnd);
+	root->left = build_tree(inStart, position-1, preStart+1, preStart-inStart+position);
+	root->right = build_tree(position+1, inEnd, preStart-inStart+position+1, preEnd);
 
 	post_order.push_back(root->key);
 

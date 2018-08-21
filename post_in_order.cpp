@@ -16,12 +16,12 @@ vector<int> result;
     
 Node* build_tree(int inStart, int inEnd, int postStart, int postEnd)
 {  
-    if (postStart > postEnd)
+    if (postStart>postEnd || inStart>inEnd)
 	{  
         return NULL;  
     }  
   
-    Node * root = new Node;  
+    Node* root = new Node;  
     //查找后序队列中，最后一个数据在中序队列中的位置  
     int position;  
     for (int i = inStart; i <= inEnd; i++)
@@ -45,7 +45,7 @@ Node* build_tree(int inStart, int inEnd, int postStart, int postEnd)
       
       
 //层次遍历二叉树  
-void level_order(Node * root,int totalNode)
+void level_order(Node* root)
 {  
     if (root == NULL)
 	{  
@@ -76,24 +76,22 @@ int main()
 	int N;
 	cin>>N;  
 
-    //后序序列  
+    post_order.resize(N);
+    for (int i = 0; i<post_order.size(); i++)
+	{
+		cin>>post_order[i];
+    }  
+    	
+	in_order.resize(N);  
     for (int i = 0; i<N; i++)
 	{  
-		int temp;
-		cin>>temp;
-		post_order.push_back(temp);
+		cin>>in_order[i];
     }  
-    //中序序列  
-    for (int i = 0; i<N; i++)
-	{  
-		int temp;
-		cin>>temp;
-		in_order.push_back(temp);
-    }  
-    //根据后序和中序序列建二叉树  
+
+ 
     Node* root = build_tree(0, N-1, 0, N-1);  
-    //层次遍历二叉树  
-    level_order(root, N);  
+
+    level_order(root);  
 
 	for(int i=0;i<N;i++)
 	{

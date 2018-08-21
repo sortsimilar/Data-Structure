@@ -35,10 +35,9 @@ Node* build_tree(int postStart, int postEnd, int midStart, int midEnd)
       
     }  
     //中序队列中距离的起始位置的个数，即第i个位置为根结点，左边num个是它的左子树的个数  
-    int numStart = position - midStart;  
     root->key = post_order[postEnd];  
-    root->left = build_tree(postStart, postStart+numStart-1, midStart , position-1);   
-    root->right = build_tree(postStart+numStart, postEnd-1, position+1, midEnd);
+    root->left = build_tree(postStart, postStart-midStart+position-1, midStart , position-1);   
+    root->right = build_tree(postStart-midStart+position, postEnd-1, position+1, midEnd);
     return root;  
 }  
       

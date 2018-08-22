@@ -12,7 +12,7 @@ struct Node
 vector<int> post_order;
 vector<int> in_order;
 
-vector<int> result;  
+vector<int> level_sequence;  
     
 Node* build_tree(int inStart, int inEnd, int postStart, int postEnd)
 {  
@@ -22,19 +22,18 @@ Node* build_tree(int inStart, int inEnd, int postStart, int postEnd)
     }  
   
     Node* root = new Node;  
-    //查找后序队列中，最后一个数据在中序队列中的位置  
+     
     int position;  
     for (int i = inStart; i <= inEnd; i++)
 	{  
         if (in_order[i] == post_order[postEnd])
-		{  
-            //找到了，中序队列中第i个位置就是的  
+		{
 			position = i;
             break;  
         }  
       
     }  
-    //中序队列中距离的起始位置的个数，即第i个位置为根结点，左边num个是它的左子树的个数  
+
     root->key = post_order[postEnd];  
     root->left = build_tree(inStart , position-1, postStart, postStart-inStart+position-1);   
     root->right = build_tree(position+1, inEnd, postStart-inStart+position, postEnd-1);
@@ -42,16 +41,9 @@ Node* build_tree(int inStart, int inEnd, int postStart, int postEnd)
     return root;  
 }  
       
-      
-      
-//层次遍历二叉树  
+       
 void level_order(Node* root)
 {  
-    if (root == NULL)
-	{  
-        return;  
-    }  
-
 	vector<Node*> q;  
     q.push_back(root);  
 
@@ -61,10 +53,10 @@ void level_order(Node* root)
 		Node* current = q[0];
 		q.erase(q.begin());
 		
-		result.push_back(current->key); 
+		level_sequence.push_back(current->key); 
   
-        if (current->left != NULL)    q.push_back(current->left);//左子树入队    
-        if (current->right != NULL)   q.push_back(current->right);//右子树入队  
+        if (current->left != NULL)    q.push_back(current->left);   
+        if (current->right != NULL)   q.push_back(current->right);  
 
     }
 	  
@@ -93,10 +85,10 @@ int main()
 
     level_order(root);  
 
-	for(int i=0;i<N;i++)
+	for(int i=0;i<level_sequence.size();i++)
 	{
-		cout<<result[i];
-		if(i!=N-1)    cout<<" ";
+		cout<<level_sequence[i];
+		if(i!=level_sequence.size()-1)    cout<<" ";
 	}
   
     return 0;  

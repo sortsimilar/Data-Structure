@@ -1,34 +1,39 @@
-// level order of binary tree;
-
 #include<iostream>
 #include<vector>
 using namespace std;
 
-// type of node;
+
 struct Node
 {
-	int name;
+	int key;
 	int left;
 	int right;
-	int parent;
 };
 
 
-
 vector<Node> binary;
-vector<Node> level_sequence;
+vector<int> level_sequence;
 
 
-// print level
-void level_order(Node root, int level)
-{
-	if(level == 1)    level_sequence.push_back(root);
-	else if(level > 1)
+void level_order(int root)
+{    
+
+	vector<int> q;  
+    q.push_back(root);  
+
+
+    while (!q.empty())
 	{
-		if(root.left != -1)    level_order(binary[root.left], level-1); 
-		if(root.right != -1)    level_order(binary[root.right], level-1);
-	}
-}
+		int current = q[0];
+		q.erase(q.begin());
+		
+		level_sequence.push_back(binary[current].key); 
+
+		if(binary[current].left != -1)    q.push_back(binary[current].left);
+		if(binary[current].right != -1)    q.push_back(binary[current].right);
+    }
+	  
+} 
 
 
 
@@ -42,78 +47,67 @@ int main()
 
 	
 	// build binary tree;
+	vector<bool> hash_table(N, false);
+
+	binary.resize(N);
 	for(int i=0;i<N;i++)
 	{
-		Node temp;
-		temp.name = i;
-		char left; 
-		char right;
-		cin>>left;
-		cin>>right;		
-		if(left != '-')    temp.left = left - '0';
-		else    temp.left = -1;
-		if(right != '-')    temp.right = right - '0';
-		else    temp.right = -1;
 
-		temp.parent = -1;
+		binary[i].key = i;
 
-		binary.push_back(temp);
-	}
-
-	// set parent for every node;
-	for(int i=0;i<N;i++)
-	{
-		int left = binary[i].left;
-		int right = binary[i].right;
-
-		if(left != -1)    binary[left].parent = i;
-		if(right != -1)    binary[right].parent = i;
-
-	}
-
-	// find height of binary tree
-	int root = -1;
-	int height = 0;	
-	for(int i=0;i<N;i++)
-	{
-		int current_node = i;
-		int current_height = 0;
-		while(current_node != -1)
+		cin>>binary[i].left;
+		cin>>binary[i].right;
+		
+		if(binary[i].left != -1)
 		{
-			current_height++;
-			root = current_node;
-			current_node = binary[current_node].parent;
+			hash_table[binary[i].left] = true;
 		}
 
-		if(height<current_height)    height = current_height;
+
+
+		if(binary[i].right != -1)
+		{
+			hash_table[binary[i].right] = true;
+		}
+
 	}
 
-	// get level order for each level;
-	for(int i=1;i<=height;i++)
+	// find root of binary tree;
+	int root = -1;
+	for(int i=0;i<hash_table.size();i++)
 	{
-		level_order(binary[root], i);
+		if(hash_table[i]==false)
+		{
+			root = i;
+			break;
+		}
 	}
 
-	// output result of level order;
+
+	level_order(root);
+
 	for(int i=0;i<level_sequence.size();i++)
 	{
-		cout<<level_sequence[i].name;
-		if(i != level_sequence.size()-1)    cout<<" ";
+		cout<<level_sequence[i]<<" ";
 	}
-
-	cout<<endl;
-
 
 
 	return 0;
 }
 
+/*
 
+9
+7 8
+-1 -1
+-1 -1
+-1 -1
+0 1
+2 3
+4 5
+-1 -1
+-1 -1
 
-
-
-
-
-
+*/
 
 

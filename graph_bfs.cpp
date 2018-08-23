@@ -2,22 +2,8 @@
 #include<vector>
 using namespace std;
 
-struct Edge
-{
-	int start;
-	int end;
-};
 
-struct Node
-{
-	int key;
-	int level;
-};
-
-
-int N; // number of vertices
-int M; //  number of edges
-vector<Edge> store_edge;
+int num_v;
 vector<bool> adjacency_matrix;
 vector<bool> visited;
 
@@ -26,8 +12,8 @@ bool test_edge(int start, int end)
 {
 	bool flag = false;
 
-	if(adjacency_matrix[(start-1)*N+(end-1)]==true)    flag = true;
-	if(adjacency_matrix[(start-1)+(end-1)*N]==true)    flag = true;
+	if(adjacency_matrix[(start-1)*num_v+(end-1)]==true)    flag = true;
+	if(adjacency_matrix[(start-1)+(end-1)*num_v]==true)    flag = true;
 
 	return flag;
 }
@@ -38,40 +24,25 @@ void BFS(int i)
 {
 	visited[i-1] = true;	
 
-	vector<Node> q;
-	Node temp;
-	temp.key = i;
-	temp.level = 0;
-
-	cout<<temp.key<<" "<<temp.level<<endl;
-	
-	q.push_back(temp);
+	vector<int> q;
+	cout<<i<<" ";	
+	q.push_back(i);
 
 	while(q.size()!=0)
 	{
-		Node first = q.front();
+		int current = q.front();
 		q.erase(q.begin());
 
-		for(int j=0;j<N;j++)
+		for(int j=1;j<=num_v;j++)
 		{
-			if((test_edge(first.key, j+1) == true)&&(visited[j]==false))
+			if((test_edge(current, j) == true)&&(visited[j-1]==false))
 			{
-				visited[j] = true;
-
-				Node temp;
-				temp.key = j+1;
-				temp.level = first.level + 1;
-
-
-				cout<<temp.key<<" "<<temp.level<<endl;
-
-				q.push_back(temp);
+				visited[j-1] = true;
+				cout<<j<<" ";
+				q.push_back(j);
 			}
 		}
-
-
 	}
-
 }
 
 
@@ -80,13 +51,13 @@ void BFS(int i)
 void BFSTraverse()
 {
 	// initialize visited matrix;
-	for(int i=1;i<=N;i++)
+	for(int i=1;i<=num_v;i++)
 	{
 		visited[i-1] = false;
 	}
 
 
-	for(int i=1;i<=N;i++)
+	for(int i=1;i<=num_v;i++)
 	{
 		if(visited[i-1]==false)
 		{
@@ -101,18 +72,11 @@ void BFSTraverse()
 
 int main()
 {
-// store edge and vertices ////////////////////////////////
-	
+	int N; // number of vertices
 	cin>>N;	
+	num_v = N;
+	int M; //  number of edges	
 	cin>>M;
-
-	store_edge.resize(M);
-	for(int i=0;i<M;i++)
-	{
-		cin>>store_edge[i].start;
-		cin>>store_edge[i].end;
-	}
-
 
 	// create adjacency matrix;
 	for(int i=0;i<N*N;i++)
@@ -123,11 +87,13 @@ int main()
 	// save current amp in adjacency matrix;
 	for(int i=0;i<M;i++)
 	{
-		int start = store_edge[i].start - 1;
-		int end = store_edge[i].end - 1;
+		int start;
+		cin>>start;
+		int end;
+		cin>>end;
 
-		adjacency_matrix[start*N + end] = true;
-		adjacency_matrix[start + end*N] = true;
+		adjacency_matrix[(start-1)*N + (end-1)] = true;
+		adjacency_matrix[(start-1) + (end-1)*N] = true;
 	}
 
 //	cout<<test_edge(2, 1)<<endl;
@@ -143,10 +109,7 @@ int main()
 
 
 //	BFS(1); // test BFS one range;
-
 	BFSTraverse();
-
-
 
 
 

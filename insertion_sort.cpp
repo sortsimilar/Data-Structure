@@ -21,15 +21,6 @@ void insertion_sort()
     }
 }
 
-void print_sequence()
-{
-	for(int i=0;i<sequence.size();i++)
-	{
-		cout<<sequence[i]<<" ";
-	}
-	cout<<endl;
-
-}
 
 
 int main()
@@ -38,16 +29,18 @@ int main()
 
 	int N;
 	cin>>N;
-	for(int i=0;i<N;i++)
+	sequence.resize(N);
+	for(int i=0;i<sequence.size();i++)
 	{
-		int temp;
-		cin>>temp;
-		sequence.push_back(temp);
+		cin>>sequence[i];
 	}
 
 	insertion_sort();
 
-	print_sequence();
+	for(int i=0;i<sequence.size();i++)
+	{
+		cout<<sequence[i]<<" ";
+	}
 
 
 

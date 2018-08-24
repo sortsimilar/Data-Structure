@@ -3,12 +3,6 @@
 #include<vector>
 using namespace std;
 
-struct Edge
-{
-	int start;
-	int end;
-	int weight;
-};
 
 int num_v; // Number of vertices in the graph
 vector<int> dist;     // The output array.  dist[i] will hold the shortest distance from src to i

@@ -34,25 +34,8 @@ int minDistance()
 	return min_index;
 }
   
-// A utility function to print the constructed distance array
-int printSolution(int src)
-{
-	for (int i=0;i<num_v;i++)
-	{
-		cout<<src<<" distance to ";
-		cout<<i<<" is "<<dist[i]<<"; path is ";
 
-		int current = i;
-		while(current != -1)
-		{
-			cout<<current<<" ";
-			current = previous[current];
-		}
-		cout<<endl;
-	}
-}
   
-
 void dijkstra(int src)
 {            
 	for (int i=0;i<num_v;i++)
@@ -73,7 +56,7 @@ void dijkstra(int src)
 
 		for (int v=0;v<num_v;v++)
 		{
-			if (!sptSet[v] && get_weight(u, v) && dist[u]!=INT_MAX && dist[u]+get_weight(u, v)<dist[v])
+			if (!sptSet[v] && get_weight(u, v) && dist[u]!=INT_MAX && dist[u]+get_weight(u, v) < dist[v])
 			{
 				dist[v] = dist[u] + get_weight(u, v);
 				previous[v] = u;
@@ -83,6 +66,26 @@ void dijkstra(int src)
 
 }
   
+
+// A utility function to print the constructed distance array
+int printSolution(int src)
+{
+	for (int i=0;i<num_v;i++)
+	{
+		cout<<src<<" distance to ";
+		cout<<i<<" is "<<dist[i]<<"; path is ";
+
+		int current = i;
+		while(current != -1)
+		{
+			cout<<current<<" ";
+			current = previous[current];
+		}
+		cout<<endl;
+	}
+}
+
+
 
 int main()
 {
@@ -123,7 +126,6 @@ int main()
 }
 
 /*
-
 0 1 4
 1 2 8
 2 3 7
@@ -138,5 +140,4 @@ int main()
 8 6 6
 7 8 7
 2 5 4
-
 */

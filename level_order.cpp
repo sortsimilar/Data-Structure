@@ -25,8 +25,7 @@ void level_order(int root)
     while (!q.empty())
 	{
 		int current = q[0];
-		q.erase(q.begin());
-		
+		q.erase(q.begin());		
 		level_sequence.push_back(binary[current].key); 
 
 		if(binary[current].left != -1)    q.push_back(binary[current].left);

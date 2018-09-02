@@ -19,23 +19,23 @@ int get_weight(int start, int end)
 int get_MinIndex()
 {
 	// Initialize min value
-	int min = INT_MAX;
+	int min_distance = INT_MAX;
 	int min_index;
   
 	for (int v=0;v<num_v;v++)
 	{
-		if (sptSet[v]==false && dist[v]<=min)
+		if (sptSet[v]==false && dist[v]<=min_distance)
 		{
-			min = dist[v];
+			min_distance = dist[v];
 			min_index = v;
 		}
-	}  
+	}
 
 	return min_index;
 }
-  
 
-  
+
+
 void dijkstra(int src)
 {            
 	for (int i=0;i<num_v;i++)

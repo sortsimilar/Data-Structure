@@ -56,7 +56,7 @@ void dijkstra(int src)
 
 		for (int v=0;v<num_v;v++)
 		{
-			if (sptSet[v]==false && get_weight(u, v)!=0 && dist[u]!=INT_MAX && dist[u]+get_weight(u, v)<dist[v])
+			if (sptSet[v]==false && get_weight(u, v)!=INT_MAX && dist[u]!=INT_MAX && dist[u]+get_weight(u, v)<dist[v])
 			{
 				dist[v] = dist[u] + get_weight(u, v);
 				previous[v] = u;
@@ -99,7 +99,7 @@ int main()
 	adjacency_matrix.resize(num_v*num_v);
 	for(int i=0;i<num_v*num_v;i++)
 	{
-		adjacency_matrix[i] = 0;
+		adjacency_matrix[i] = INT_MAX;
 	}
 
 	// save current amp in adjacency matrix;

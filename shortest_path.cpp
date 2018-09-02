@@ -56,7 +56,7 @@ void dijkstra(int src)
 
 		for (int v=0;v<num_v;v++)
 		{
-			if (!sptSet[v] && get_weight(u, v) && dist[u]!=INT_MAX && dist[u]+get_weight(u, v) < dist[v])
+			if (sptSet[v]==false && get_weight(u, v)!=0 && dist[u]!=INT_MAX && dist[u]+get_weight(u, v)<dist[v])
 			{
 				dist[v] = dist[u] + get_weight(u, v);
 				previous[v] = u;

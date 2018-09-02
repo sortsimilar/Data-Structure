@@ -16,7 +16,7 @@ int get_weight(int start, int end)
 }
 
 
-int minDistance()
+int get_MinIndex()
 {
 	// Initialize min value
 	int min = INT_MAX;
@@ -50,7 +50,7 @@ void dijkstra(int src)
   
 	for (int i=0;i<num_v;i++)
 	{
-		int u = minDistance();
+		int u = get_MinIndex();
 		sptSet[u] = true;
 
 

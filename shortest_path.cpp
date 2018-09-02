@@ -22,12 +22,12 @@ int get_MinIndex()
 	int min_distance = INT_MAX;
 	int min_index;
   
-	for (int v=0;v<num_v;v++)
+	for (int i=0;i<num_v;i++)
 	{
-		if (sptSet[v]==false && dist[v]<=min_distance)
+		if (sptSet[i]==false && dist[i]<=min_distance)
 		{
-			min_distance = dist[v];
-			min_index = v;
+			min_distance = dist[i];
+			min_index = i;
 		}
 	}
 
@@ -50,16 +50,17 @@ void dijkstra(int src)
   
 	for (int i=0;i<num_v;i++)
 	{
-		int u = get_MinIndex();
-		sptSet[u] = true;
+		int min_index = get_MinIndex();
+		sptSet[min_index] = true;
 
 
-		for (int v=0;v<num_v;v++)
+		for (int j=0;j<num_v;j++)
 		{
-			if (sptSet[v]==false && get_weight(u, v)!=INT_MAX && dist[u]!=INT_MAX && dist[u]+get_weight(u, v)<dist[v])
+			if (sptSet[j]==false && get_weight(min_index, j)!=INT_MAX && 
+                dist[min_index]!=INT_MAX && dist[min_index]+get_weight(min_index, j)<dist[j])
 			{
-				dist[v] = dist[u] + get_weight(u, v);
-				previous[v] = u;
+				dist[j] = dist[min_index] + get_weight(min_index, j);
+				previous[j] = min_index;
 			}
 		}
 	}

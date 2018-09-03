@@ -11,25 +11,25 @@ int get_min(int x, int y) { return (x<y)? x :y; }
 // Merges two subarrays of arr[]. 
 // First subarray is arr[l..m] 
 // Second subarray is arr[m+1..r] 
-void merge(int l, int m, int r)
+void merge(int left, int mid, int right)
 {
     int i, j, k;
-    int n1 = m - l + 1;
-    int n2 =  r - m;
+    int n1 = mid - left + 1;
+    int n2 =  right - mid;
  
 	/* create temp arrays */
 	int L[n1];
 	int R[n2];
  
 	/* Copy data to temp arrays L[] and R[] */
-    for (i = 0; i < n1; i++)	L[i] = arr[l + i];
-    for (j = 0; j < n2; j++)	R[j] = arr[m + 1+ j];
+    for (i = 0; i < n1; i++)	L[i] = arr[left + i];
+    for (j = 0; j < n2; j++)	R[j] = arr[mid + 1+ j];
  
 
     /* Merge the temp arrays back into arr[l..r]*/
     i = 0;
     j = 0;
-    k = l;
+    k = left;
     while (i < n1 && j < n2)
     {
         if (L[i] <= R[j])
@@ -125,9 +125,9 @@ int main()
     cout<<"Given array is "<<endl;
     printArray();
  
-//    merge_sort();
+    merge_sort();
 
-	merge_one_more();
+//	merge_one_more();
  
     cout<<"Sorted array is "<<endl;
     printArray();

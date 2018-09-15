@@ -16,15 +16,16 @@ public:
 	Node * head, *tail; //tail help us add element at last;
 	List()
 	{
-		head = NULL;
-		tail = NULL;
+		head = new Node;
+		head->next = NULL;
+		tail = head;
 	}
 
 	// print all node in list;
 	void print_list()
 	{
 		Node *temp;
-		temp = head;
+		temp = head->next;
 		while (temp != NULL)
 		{
 			cout << temp->data << " " << temp << endl;
@@ -39,17 +40,8 @@ public:
 		temp->data = value;
 		temp->next = NULL;
 
-
-		if (head == NULL)
-		{
-			head = temp;
-			tail = temp;
-		}
-		else
-		{
-			tail->next = temp;
-			tail = temp;
-		}
+		tail->next = temp;
+		tail = temp;
 	}
 
 	// insert value at start
@@ -137,7 +129,8 @@ int main()
 
 	test.print_list();
 
-
-	system("pause");
 	return 0;
 }
+
+
+

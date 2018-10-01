@@ -7,11 +7,11 @@ struct ThreadNode
 	int key;
 	ThreadNode *left;
 	ThreadNode *right;
-	bool tag_left;
-	bool tag_right;
+	bool left_tag;
+	bool right_tag;
 };
 
-
+// in order traversal;
 void in_order(ThreadNode *node)
 {
 	if(node != NULL)
@@ -23,6 +23,41 @@ void in_order(ThreadNode *node)
 }
 
 
+void in_thread(ThreadNode *node, ThreadNode *pre)
+{
+	if(node != NULL)
+	{
+//		cout<<node->key<<" ";
+
+		in_thread(node->left, pre);
+		if(node->left == NULL)
+		{
+			node->left = pre;
+			node->left_tag = true;
+		}
+
+		if(pre!=NULL && pre->right==NULL)
+		{
+			pre->right = node;
+			pre->right_tag = true;
+		}
+
+		pre = node;
+		in_thread(node->right, pre);
+	}
+}
+
+
+void create_in_thread(ThreadNode *node)
+{
+	ThreadNode *pre = NULL;
+	if(node != NULL)
+	{
+		in_thread(node, pre);
+		pre->right = NULL;
+		pre->right_tag = true;
+	}
+}
 
 
 int main()
@@ -51,12 +86,14 @@ int main()
 
 
 
-	in_order(root);
+//	in_order(root);
 
 
+//	cout<<root->right->left->left_tag;
 
+	in_thread(root, NULL);
 
-
+	cout<<root->right->right->left->key;
 
 
 
